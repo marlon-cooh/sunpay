@@ -61,9 +61,16 @@ date_range = ['20190101', '20190301']
 
 daily_api = f'https://power.larc.nasa.gov/api/temporal/monthly/point?parameters={parameters_subset}&community=RE&longitude={lon}&latitude={lat}&start={date_range[0]}&end={date_range[1]}&format=JSON'
 monthly_api = f'https://power.larc.nasa.gov/api/temporal/monthly/point?parameters={parameters_subset}&community=RE&longitude={lon}&latitude={lat}&format=CSV&start=2020&end=2021'
-test_api = f"https://power.larc.nasa.gov/api/temporal/monthly/point?start=2022&end=2024&latitude={lat}&longitude={lon}&community=re&parameters=ALLSKY_SFC_SW_DWN&format=csv&header=true&time-standard=utc"
+test_api = f"https://power.larc.nasa.gov/api/temporal/monthly/point?start=2022&end=2024&latitude={lat}&longitude={lon}&community=re&parameters={parameters_subset}&format=csv&header=true&time-standard=utc"
 
-response = requests.get(test_api).text
+def make_request():
+    return requests.get(test_api).text
+
+# # Measure the time taken for the API request
+# execution_time = timeit.timeit(make_request, number=1)
+# print(f"API request took {execution_time:.2f} seconds")
+
+response = make_request()
 # irradiance_from_rq = response["properties"]["parameter"][parameters_subset]
 # df = pd.DataFrame({
 #     "date": list(irradiance_from_rq.keys()),
